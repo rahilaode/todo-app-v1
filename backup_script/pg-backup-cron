@@ -1,0 +1,3 @@
+# must be ended with a new line "LF" (Unix) and not "CRLF" (Windows)
+* * * * * pg_dump -Fc -h db -U laode -d website -p 5432 -f backup/backup_`date +\%Y\%m\%d_\%H\%M\%S`.sql
+# An empty line is required at the end of this file for a valid cron file.
