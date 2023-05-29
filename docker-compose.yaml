@@ -31,4 +31,4 @@ services:
     depends_on:
       - db
     ports:
-      - 5433
+      - 5433:5433

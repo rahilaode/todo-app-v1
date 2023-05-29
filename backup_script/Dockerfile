@@ -6,7 +6,7 @@ COPY ./backup ./backup
 RUN apt-get update && apt-get install -y cron
 
 # Install postgres
-RUN apt install -y postgresql postgresql-contrib
+RUN apt install postgresql postgresql-contrib -y
 
 # Copy hello-cron file to the cron.d directory
 COPY pg-backup-cron /etc/cron.d/pg-backup-cron
