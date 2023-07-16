@@ -9,7 +9,7 @@ on:
 
 jobs:
     server_conn:
-        uses: ./.github.workflows/server_config.yml
+        uses: ./.github/workflows/server_config.yml
 
     setup_github_repo:
         name: Setup Github Repository
