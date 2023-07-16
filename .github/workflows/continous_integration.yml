@@ -24,10 +24,6 @@ jobs:
               run: |
                 ssh-keyscan ${{ secrets.SERVER_IP}} >> ~/.ssh/known_hosts
 
-            - name: Create project folder on server
-              run: |
-                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "sudo mkdir -p ~/todo-app"
-
             - name: Initalize repository
               run: |
                 ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "cd ~/todo-app && git init"
