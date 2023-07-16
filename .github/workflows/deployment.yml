@@ -1,8 +1,8 @@
-name: Deployment
+name: Continous Deployment
 
 on:
   workflow_run: 
-      workflows: ["Setup Github Repository"]
+      workflows: ["Continous Integration"]
       branches: [master]
       types:
           - completed
@@ -10,7 +10,7 @@ on:
 
 jobs:
   conn_server:
-    uses: ./.github.workflows/server_config.yml
+    uses: ./.github.workflows/continous_integration.yml
 
   Deployment:
       name: Install Docker Compose
