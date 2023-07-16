@@ -10,7 +10,10 @@ on:
 jobs:
     server_conn:
         uses: ./.github/workflows/server_config.yml
-
+        steps:
+            - name: Configure Known Hosts
+              run: |
+                ssh-keyscan ${{ secrets.SERVER_IP}} >> ~/.ssh/known_hosts
     setup_github_repo:
         name: Setup Github Repository
         runs-on: ubuntu-latest

@@ -21,7 +21,3 @@ jobs:
               run: |
                 mkdir -p ~/.ssh
 
-            - name: Configure Known Hosts
-              run: |
-                ssh-keyscan ${{ secrets.SERVER_IP}} >> ~/.ssh/known_hosts
-
