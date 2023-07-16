@@ -1,9 +1,9 @@
 name: Server Configurations
 
 on:
-    workflow_run: ["Server Configurations"]
-        types:
-            - updated
+    push:
+        branches:
+            - master
 
 
 jobs:
