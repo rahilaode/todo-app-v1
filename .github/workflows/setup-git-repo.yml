@@ -1,0 +1,34 @@
+name: Setup Github Repository
+
+on:
+    workflow_run: ["Server Configurations"]
+    types:
+        - completed
+
+jobs:
+    setup_github_repo:
+        name: Setup Github Repository
+        needs: [server_connection]
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Create project folder on server
+              run: |
+                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "mkdir -p ~/todo-app"
+
+            - name: Initalize repository
+              run: |
+                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "cd ~/todo-app && git init"
+
+            - name: Add Remote Repository
+              run: |
+                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "cd ~/todo-app && git remote add origin ${{ secrets.REPO_GITHUB}}"
+
+            - name: Pull from repository
+              run: |
+                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} " cd ~/todo-app && git pull origin master"
+
+            

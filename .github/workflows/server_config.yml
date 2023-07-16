@@ -1,0 +1,30 @@
+name: Server Configurations
+
+on:
+    workflow_run: ["Server Configurations"]
+    types:
+        - updated
+
+
+jobs:
+    server_connection:
+        name: Setup Connection To server
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Setup SSH Private Keys
+              run: |
+                echo "${{ SSH_PRIVATE_KEY }}" > PRIVATE_KEY.pem
+                chmod 600 PRIVATE_KEY.pem
+
+            - name: Create SSH Directory
+              run: |
+                mkdir -p ~/.ssh
+
+            - name: Configure Known Hosts
+              run: |
+                ssh-keyscan ${{ secrets.SERVER_IP}} >> ~/.ssh/known_hosts
+
