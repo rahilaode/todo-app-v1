@@ -1,17 +1,27 @@
 name: Deployment
 
 on:
-    workflow_run: ["Setup Github Repository"]
-    types:
-        - completed
+  workflow_run: 
+      workflows: ["Setup Github Repository"]
+      branches: [master]
+      types:
+          - completed
+
 
 jobs:
-    install-docker-compose:
-        name: Install Docker Compose
-        needs: [server_connection]
-        runs-on: ubuntu-latest
+  conn_server:
+    uses: ./.github.workflows/server_config.yml
 
-        steps:
-            - name: Update, install docker compose, adn pull from repository
-              run: |
-                ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "sudo apt-get update && sudo apt-get install -y docker-compose && cd todo-app-v1 && git pull origin master"
+  Deployment:
+      name: Install Docker Compose
+      needs: [conn_server]
+      runs-on: ubuntu-latest
+
+      steps:
+          - name: Docker Compose Down
+            run: |
+              ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "cd ~/todo-app && sudo docker-compose down"
+
+          - name: Docker Compose Up (Running in background)
+            run: |
+              ssh -i PRIVATE_KEY.pem ubuntu@${{ secrets.SERVER_IP}} "cd ~/todo-app && sudo docker-compose up -d"
